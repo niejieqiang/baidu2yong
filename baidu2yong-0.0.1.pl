@@ -1,7 +1,7 @@
 #!/usr/bin/perl 
 use strict;
 use warnings;
-use File::Find;
+use DirHandle;
 use Image::Size;
 use File::Basename;
 use Cwd;
