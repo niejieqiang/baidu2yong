@@ -6,8 +6,10 @@ use File::Basename;
 use DirHandle;
 use Cwd;
 use feature qw(say);
+use utf8;
+use open ":encoding(cp936)",":std";
 
-#½«Æ¤·ôÎÄ¼ş¼ĞÄÚµÄÎÄ¼şÃû´æÎªÊı×é¡£
+#å°†çš®è‚¤æ–‡ä»¶å¤¹å†…çš„æ–‡ä»¶åå­˜ä¸ºæ•°ç»„ã€‚
 my $dh= DirHandle->new($ARGV[0] ||".");
 my @file_lists=$dh->read;
 undef $dh;
@@ -18,15 +20,15 @@ undef $dh;
 
 sub about_tray_module {
 	my $skin_name=basename(getcwd);
-	say "#ÊäÈë·¨Ãû×Ö\n[about]";
+	say "#è¾“å…¥æ³•åå­—\n[about]";
 	say "name=$skin_name";
-	say "\n#ÍĞÅÌicon";
+	say "\n#æ‰˜ç›˜icon";
 	say "[tray]";
 	say "icon=tray1.ico,tray2.ico";
 }
 
 sub main_module { 
-	say "\n#×´Ì¬À¸ÉèÖÃ\n[main]";
+	say "\n#çŠ¶æ€æ è®¾ç½®\n[main]";
 	my $toolbar_bg=qr/toolbar_background\.png/;
 	&print_background_and_size($toolbar_bg);
     my ($img_width,$img_height)=&get_imgsize(&find_image_name($toolbar_bg));
@@ -40,51 +42,51 @@ sub main_module {
 	my $cn_punctuation=qr/cn_punctuation.*png/;
 	my $keyboard=qr/login.*png/;
 	my $setting=qr/setting.*png/;
-	my $x_toolbar=8;			# ×î×ó±ßÍ¼±êµÄx×ø±ê
-	my $y_toolbar=26;			#×´Ì¬À¸Í¼±êy×ø±ê
-	my $increament=15;			#ÔöÁ¿---µÚÒ»¸öÍ¼±êºÍµÚ¶ş¸öÍ¼±êÖ®¼äx×ø±êµÄ²îÖµ
+	my $x_toolbar=8;			# æœ€å·¦è¾¹å›¾æ ‡çš„xåæ ‡
+	my $y_toolbar=26;			#çŠ¶æ€æ å›¾æ ‡yåæ ‡
+	my $increament=15;			#å¢é‡---ç¬¬ä¸€ä¸ªå›¾æ ‡å’Œç¬¬äºŒä¸ªå›¾æ ‡ä¹‹é—´xåæ ‡çš„å·®å€¼
 
-	say "\n#ÖĞÓ¢ÎÄÍ¼±êÎ»ÖÃ\nlang=$x_toolbar,$y_toolbar";
+	say "\n#ä¸­è‹±æ–‡å›¾æ ‡ä½ç½®\nlang=$x_toolbar,$y_toolbar";
 	say "lang_cn=",join ',',&get_sorted_png($chinese);
 	say "lang_en=",join ',',&get_sorted_png($english);
 
-	say "\n#È«°ë½Ç\ncorner=".($x_toolbar+$increament).",$y_toolbar";	
+	say "\n#å…¨åŠè§’\ncorner=".($x_toolbar+$increament).",$y_toolbar";	
 	say "corner_full=",join ',',&get_sorted_png($full);
 	say "corner_half=",join ',',&get_sorted_png($half);
 	
-	say "\n#±êµãÉèÖÃ\nbiaodian=".($x_toolbar+2*$increament).",$y_toolbar";	
+	say "\n#æ ‡ç‚¹è®¾ç½®\nbiaodian=".($x_toolbar+2*$increament).",$y_toolbar";	
 	say "biaodian_en=",join ',',&get_sorted_png($en_punctuation);
 	say "biaodian_cn=",join ',',&get_sorted_png($cn_punctuation);
 
-	say "\n#¼üÅÌĞ¡Í¼Æ¬ÉèÖÃ\nkeyboard=".($x_toolbar+3*$increament).",$y_toolbar";
+	say "\n#é”®ç›˜å°å›¾ç‰‡è®¾ç½®\nkeyboard=".($x_toolbar+3*$increament).",$y_toolbar";
 	say "keyboard_img=",join ',',&get_sorted_png($keyboard);
 
-	say "\n#²Ëµ¥Í¼Æ¬ÉèÖÃ\nmenu=".($x_toolbar+4*$increament).",$y_toolbar";
+	say "\n#èœå•å›¾ç‰‡è®¾ç½®\nmenu=".($x_toolbar+4*$increament).",$y_toolbar";
 	say "menu_img=",join ',', &get_sorted_png($setting);
 }
 
 sub input_module {
 	my $main_background=qr/main_backgroundH\.png/;
-	say "\n#ºòÑ¡´°ÉèÖÃ\n[input]";
+	say "\n#å€™é€‰çª—è®¾ç½®\n[input]";
 	&print_background_and_size($main_background);
-	say "\n#Í¼°¸·ÀÀ­ÉìÉèÖÃ";
+	say "\n#å›¾æ¡ˆé˜²æ‹‰ä¼¸è®¾ç½®";
     my ($width,$height)=&get_imgsize(&find_image_name($main_background));
 	say "stretch=".int($width/2).",".($width-$width/2-2);
-	say "\n#ÎÄ×Ö×óÓÒ³öÏÖÎ»ÖÃ\nwork=15,15";
-	say "\n#±àÂë³öÏÖÎ»ÖÃ\ncode=45,30";
-	say "\n#ºòÑ¡´Ê³öÏÖÎ»ÖÃ\ncand=45,52";
+	say "\n#æ–‡å­—å·¦å³å‡ºç°ä½ç½®\nwork=15,15";
+	say "\n#ç¼–ç å‡ºç°ä½ç½®\ncode=45,30";
+	say "\n#å€™é€‰è¯å‡ºç°ä½ç½®\ncand=45,52";
 	say "space=10";
 	say "font=Arial 12";
-	say "\n#×ÖÌåÑÕÉ«";
+	say "\n#å­—ä½“é¢œè‰²";
 	say "color=#929142,#BD5407,#929142,#929142";
-	say "#0:Á½ĞĞ,1:µ¥ĞĞ,2:¶àĞĞ";
+	say "#0:ä¸¤è¡Œ,1:å•è¡Œ,2:å¤šè¡Œ";
 	say "line=0";
 	say "no=0";
 	say "caret=1";
 	say "page=0";
 }
-######################ÎÒÊÇ·Ö¸îÏß##############################################
-#°´normal¡¢hover¡¢clickÅÅĞò×´Ì¬À¸Í¬ÀàÍ¼±ê
+######################æˆ‘æ˜¯åˆ†å‰²çº¿##############################################
+#æŒ‰normalã€hoverã€clickæ’åºçŠ¶æ€æ åŒç±»å›¾æ ‡
 sub get_sorted_png{
 	my $pattern=shift;
 	my @pngs;
@@ -98,14 +100,14 @@ sub get_sorted_png{
 		   map {[split(/_/,$_,2), $_]} @pngs;
 }
 
-#»ñÈ¡Í¼Æ¬´óĞ¡
+#è·å–å›¾ç‰‡å¤§å°
 sub get_imgsize {
 	my $img_name=shift;
 	my ($width,$height)=imgsize($img_name);
 	return ($width,$height);
 }
 
-#»ñÈ¡Í¼Æ¬Ãû×Ö
+#è·å–å›¾ç‰‡åå­—
 sub find_image_name {
 	my $pattern=shift;
 	foreach ( @file_lists ) {
@@ -115,7 +117,7 @@ sub find_image_name {
 	}
 }
 
-#ÓÉÓÚÓĞÁ½µØ·½ĞèÒª´òÓ¡bg= size= msize ÊôĞÔ£¬ËùÒÔ±àÁËÒ»¸ösub
+#ç”±äºæœ‰ä¸¤åœ°æ–¹éœ€è¦æ‰“å°bg= size= msize å±æ€§ï¼Œæ‰€ä»¥ç¼–äº†ä¸€ä¸ªsub
 sub print_background_and_size {
 	my $pattern=shift;
 	say "bg=",&find_image_name($pattern);
